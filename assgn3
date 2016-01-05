@@ -1,31 +1,26 @@
 #include <stdio.h>
- 
 long factorial(int);
- 
 int main()
 {
-   int i, j;
+   int i,j;
  
-   for (i = 0; i < 6; i++)
+   for (i=0;i<6;i++)
    {
-      
- 
-      for (j = 0 ; j <= i; j++){
+      for (j=0 ; j<=i;j++){
          printf("%ld   ",factorial(i)/(factorial(j)*factorial(i-j)));
       }
       printf("\n");
-   }
- 
+   } 
    return 0;
 }
  
 long factorial(int n)
 {
-   int c;
-   long result = 1;
+   int i;
+   long result=1;
  
-   for (c = 1; c <= n; c++)
-         result = result*c;
+   for (i=1;i<=n;i++)
+         result =result*i;
  
    return result;
 }
