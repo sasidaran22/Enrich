@@ -46,7 +46,7 @@ void generatematrix(int n)
 
 int main() 
 {
-	int i,j,n,mat[n][n];
+	int i,j,n;
 	printf("Enter the order of the square matrix(only odd number)\n");
 	scanf("%d",&n);
 	if(n%2==0)
