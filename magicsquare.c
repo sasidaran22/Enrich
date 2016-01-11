@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 void generatematrix(int n)
 { 	int i,j,size,num,matrix[50][50];
