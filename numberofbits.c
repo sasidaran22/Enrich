@@ -6,10 +6,15 @@ int main(void)
     int num,i;
     printf("Enter the number\n");
     scanf("%d",&num);
-    for(i=0;pow(2,i)<=num;)
+    if(num!=0)
     {
-        i++;
+        for(i=0;pow(2,i)<=num;)
+            {
+                i++;
+            }
+        printf("Tne number of required bits is %d",i);  
     }
-    printf("Tne number of required bits is %d",i);
+    else
+        printf("0");
     return 0;
 }
