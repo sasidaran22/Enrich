@@ -25,11 +25,11 @@ int main()
 int nextprime(int n)
 {
     int i;
-	for(i=3;i<=n/2;i=i+2)
-	{
-		if(n%i==0)
-			return 0;
-	}
-	return 1;
+    for(i=3;i<=n/2;i=i+2)
+    {
+	 if(n%i==0)
+            return 0;
+    }
+         return 1;
 
 }
