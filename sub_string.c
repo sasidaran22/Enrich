@@ -1,35 +1,51 @@
-// largest substring and print its length
 #include<stdio.h>
+#include<string.h>
+void compare(char* temp,char* res)
+{
+    if(strlen(temp)>strlen(res))
+    {
+        strcpy(res,temp);
+    }
+}
 int main()
 {
-    char str[20],res[20],temp;
-    int i,j,count=0,n=0;
-    printf("Enter the string\n");
+    char str[30],res[30]={},temp[30];
+    int i,j,k=1,count=1;
     scanf("%s",str);
-    printf("The string is %s\n",str);
-
-    for(i=0;str[i]!='\0';i++)
+    printf("The string is %s\n\n",str);
+    for(i=1;str[i]!='\0';i++)
     {
-        for(j=i;str[j]!='\0';j++)
+        if(count!=0)
         {
-            if (str[i]==str[j])
+
+            temp[k-1]=str[i-1];
+            temp[k]='\0';
+            count=0;
+        }
+
+        for(j=0;temp[j]!='\0';j++)
+        {
+            if(str[i]==temp[j])
             {
                 count++;
-                temp=str[i];
             }
 
         }
-        if(count==1)
+        if(count==0)
         {
-            res[n]=temp;
-            n++;
+            temp[k]=str[i];
+            k++;
+            temp[k]='\0';
+            compare(temp,res);
         }
-        count=0;
+        else
+        {
+            compare(temp,res);
+            k=1;
+        }
     }
-    res[n]='\0';
-    printf("The longest sub-string without repetition is %s\n",res);
-
-    printf("The length of longest sub-string is %d\n",n);
+    printf("The longest sub-string without repitition is %s\n",res);
+    printf("The length of the string is %d\n",strlen(res));
 
     return 0;
 }
