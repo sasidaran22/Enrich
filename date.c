@@ -100,7 +100,7 @@ int diff(char b[])
     y2=findnum(b,0,3);
     day2=findnum(b,8,9);
     mon2=findnum(b,5,6);
-    if(y2>year)
+    if((y2>year)||(mon2>month)||(day2>day))
     {
         t=year;
         year=y2;
