@@ -1,13 +1,14 @@
 #include<stdio.h>
+int flag;
 struct input
 {
     int y;
     int m;
     int d;
-
+    
 }x;
 char *months[]={"January","February","March","April","May","June","July","August","September","October","November","December"};
-char *week[]={"Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday"};
+char *week[]={"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
 int days[]={31,28,31,30,31,30,31,31,30,31,30,31};
 int isleap(int year)
 {
@@ -31,8 +32,8 @@ int findnum(char a[],int m,int n)
 
 int findindex()
 {
-
-    int i,j,res=0,year=x.y,month=x.m,day=x.d;
+    
+    int i,res=0,year=x.y,month=x.m,day=x.d;
     if(isleap(year))
     {
         days[1]=29;
@@ -41,13 +42,24 @@ int findindex()
     {
         res+=days[i];
     }
-
+    
     return (res+day);
 }
+void numtochar(char str[],int m,int n,int num)
+{
+    int i,temp;
+    for(i=n;i>=m;i--)
+    {
+        temp=num%10;
+        num/=10;
+        str[i]=(temp+'0');
+    }
+}
+
 
 void date_before_n_days(int n,char str[])
 {
-    int new_date,new_month,new_year,i,count=0,year=x.y,month=x.m,day=x.d;
+    int new_date,new_month,new_year,count=0,year=x.y,month=x.m,day=x.d;
     new_month=month;
     new_year=year;
     if((day-n)<1)
@@ -59,7 +71,7 @@ void date_before_n_days(int n,char str[])
                 days[1]=29;
             else
                 days[1]=28;
-
+            
             if((month-1)==0)
             {
                 month=12;
@@ -72,7 +84,7 @@ void date_before_n_days(int n,char str[])
                 month--;
             }
             count=count+days[month-1];
-
+            
         }
         new_date=count-n;
     }
@@ -84,24 +96,16 @@ void date_before_n_days(int n,char str[])
     str[4]=str[7]='-';
     str[10]='\0';
 }
-void numtochar(char str[],int m,int n,int num)
-{
-    int i,temp;
-    for(i=n;i>=m;i--)
-    {
-        temp=num%10;
-        num/=10;
-        str[i]=(temp+'0');
-    }
-}
 int diff(char b[])
 {
-    int y2,mon2,day2,res,i,t,year=x.y,month=x.m,day=x.d;
+    int y2,mon2,day2,res,t,year=x.y,month=x.m,day=x.d;
     y2=findnum(b,0,3);
     day2=findnum(b,8,9);
     mon2=findnum(b,5,6);
+    flag=1;
     if((y2>year)||(mon2>month)||(day2>day))
     {
+        flag=-1;
         t=year;
         year=y2;
         y2=t;
@@ -121,7 +125,7 @@ int diff(char b[])
                 days[1]=29;
             else
                 days[1]=28;
-
+            
             if((month-1)==0)
             {
                 month=12;
@@ -132,34 +136,31 @@ int diff(char b[])
                 month--;
             }
             res+=days[month-1];
-
+            
         }
         else
             break;
     }
     res-=day2;
     return res;
-
+    
 }
 
 int findweek_day()
 {
-    int c1,c2,c3,res,year=x.y,month=x.m,day=x.d;
-    if((month==1)||(month==2))
-    {
-        month+=12;
-        year-=1;
-    }
-    c1=13*(month+1)/5;
-    c2=year%100;
-    c3=year/100;
-    res=((day+c1+c2+(c2/4)+(c3/4)+(c3*5))%7);
-    return res;
+    int result;
+    char str[]="2015-02-21";
+    result=diff(str);
+    result%=7;
+    if (flag==1)
+        return result;
+    else
+        return (6-result);
 }
 int main()
 {
-
-    char a[10],b[10],new_date[10];
+    
+    char a[11],b[11],new_date[11];
     int index,n,difference;
     printf("Enter a valid date\n");
     scanf("%s",a);
