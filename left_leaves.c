@@ -2,15 +2,15 @@
 #include<stdlib.h>
 struct binary_tree
 {
-    int key;
+    int data;
     struct binary_tree* left, *right;
 };
 
-struct binary_tree *insert(int k)
+struct binary_tree *insert(int num)
 {
-    struct binary_tree *node = (struct binary_tree *)malloc(sizeof(struct binary_tree));
-    node->key = k;
-    node->right = node->left = NULL;
+    struct binary_tree *node=(struct binary_tree *)malloc(sizeof(struct binary_tree));
+    node->data=num;
+    node->right=node->left = NULL;
     return node;
 }
  
@@ -30,7 +30,7 @@ int sum(struct binary_tree *root)
     {
        
        if (check(root->left))
-            res+=root->left->key;
+            res+=root->left->data;
        else 
             res+=sum(root->left);
     
