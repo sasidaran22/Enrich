@@ -1,56 +1,69 @@
-#include<stdio.h>
-#include<stdlib.h>
-struct binary_tree
+#include <stdio.h>
+#include <stdlib.h>
+struct tree
 {
     int data;
-    struct binary_tree* left, *right;
+    struct tree *left, *right;
 };
-
-struct binary_tree *insert(int num)
+struct tree* insert(int num)
 {
-    struct binary_tree *node=(struct binary_tree *)malloc(sizeof(struct binary_tree));
+    struct tree *node=(struct tree *)malloc(sizeof(struct tree));
     node->data=num;
-    node->right=node->left = NULL;
+    node->left=node->right=NULL;
     return node;
 }
- 
-int check(struct binary_tree *node)
+int find(struct tree *node)
 {
-   if (node==NULL)
-       return 0;
-   if ((node->left==NULL)&&(node->right==NULL))
-       return 1;
-   return 0;
+    int sum=0;
+    if((node->left!=NULL)&&(node->right!=NULL))
+        sum+=node->left->data+node->right->data+find(node->left)+find(node->right);
+    else if((node->left==NULL)&&(node->right!=NULL))
+        sum+=node->right->data+find(node->right);
+    else if((node->left!=NULL)&&(node->right==NULL))
+        sum+=node->left->data+find(node->left);
+    return sum;
 }
-
-int sum(struct binary_tree *root)
+int sumtree(struct tree *node)
 {
-    int res=0;
-    if (root != NULL)
+    int res,t1,t2,temp;
+    if(node==NULL)
+        return 1;
+    else if((node->left==NULL)&&(node->right==NULL))
+        return 1;
+    else
     {
-       
-       if (check(root->left))
-            res+=root->left->data;
-       else 
-            res+=sum(root->left);
-    
-        res+=sum(root->right);
+        temp=find(node);
+        if(temp==node->data)
+            res=1;
+        else
+            res=0;
     }
- 
-    return res;
+    if(res==1)
+    {
+        t1=sumtree(node->left);
+        t2=sumtree(node->right);
+        if((t1==1)&&(t2==1))
+            return 1;
+        else
+            return 0;
+    }
+    else
+        return 0;
 }
- 
 int main()
 {
-    struct binary_tree *root  = insert(30);
-    root->left                = insert(19);
-    root->right               = insert(49);
-    root->right->left         = insert(23);
-    root->right->right        = insert(52);
-    root->right->right->left  = insert(50);
-    root->left->left          = insert(55);
-    root->left->right         = insert(12);
-    root->left->right->right  = insert(12);
-    printf("Sum of left leaves is %d\n",sum(root));
+    int flag;
+    struct tree *root=insert(50);
+    root->left=insert(18);
+    root->right=insert(14);
+    root->left->left=insert(5);
+    root->left->left->left=insert(2);
+    root->left->left->right=insert(3);
+    root->left->right=insert(8);
+    flag=sumtree(root);
+    if(flag==1)
+        printf("It is sum tree\n");
+    else
+        printf("It is not sum tree\n");
     return 0;
 }
