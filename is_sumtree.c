@@ -12,42 +12,28 @@ struct tree* insert(int num)
     node->left=node->right=NULL;
     return node;
 }
-int check(struct tree *node)
+int find(struct tree *node)
 {
-    if((node->left==NULL)&&(node->right!=NULL))
-    {
-        if(node->data==node->right->data)
-            return 1;
-        else
-            return 0;
-    }
-    else if((node->right==NULL)&&(node->left!=NULL))
-        
-    {
-        if(node->data==node->left->data)
-            return 1;
-        else
-            return 0;
-    }
-
-    else
-    {
-        if((node->data==(node->left->data+node->right->data))||((node->data)==(2*(node->left->data+node->right->data))))
-            return 1;
-        else
-            return 0;
-    }
+    int sum=0;
+    if((node->left!=NULL)&&(node->right!=NULL))
+        sum+=node->left->data+node->right->data+find(node->left)+find(node->right);
+    else if((node->left==NULL)&&(node->right!=NULL))
+        sum+=node->right->data+find(node->right);
+    else if((node->left!=NULL)&&(node->right==NULL))
+        sum+=node->left->data+find(node->left);
+    return sum;
 }
 int sumtree(struct tree *node)
 {
-    int res,t1,t2;
+    int res,t1,t2,temp;
     if(node==NULL)
         return 1;
     else if((node->left==NULL)&&(node->right==NULL))
         return 1;
     else
     {
-        if(check(node))
+        temp=find(node);
+        if(temp==node->data)
             res=1;
         else
             res=0;
@@ -67,12 +53,13 @@ int sumtree(struct tree *node)
 int main()
 {
     int flag;
-    struct tree *root=insert(26);
-    root->left=insert(10);
-    root->right=insert(3);
-    root->left->left=insert(4);
-    root->left->right=insert(6);
-    root->right->right=insert(3);
+    struct tree *root=insert(50);
+    root->left=insert(18);
+    root->right=insert(14);
+    root->left->left=insert(5);
+    root->left->left->left=insert(2);
+    root->left->left->right=insert(3);
+    root->left->right=insert(8);
     flag=sumtree(root);
     if(flag==1)
         printf("It is sum tree\n");
